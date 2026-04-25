@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>VLTECH</title>
+    <script>
+      // SPA redirect: GitHub Pages serves 404.html for unknown paths.
+      // Store the full URL and redirect to root, then React Router handles it.
+      var path = window.location.pathname;
+      sessionStorage.setItem('redirect', path);
+    </script>
+    <meta http-equiv="refresh" content="0;URL='/'" />
+  </head>
+  <body></body>
+</html>

@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+@import "tailwindcss";
+
+/* ─── Tokens ─── */
+:root {
+  --bg:      #080812;
+  --surface: #0e0e1c;
+  --card:    #12121f;
+  --border:  #1e1e32;
+  --violet:  #7c3aed;
+  --cyan:    #06b6d4;
+  --white:   #f1f5f9;
+  --muted:   #64748b;
+  --grad:    linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+
+body {
+  background-color: var(--bg);
+  color: var(--white);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#root { min-height: 100dvh; display: flex; flex-direction: column; }
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--white);
+}
+
+/* ─── Gradient text ─── */
+@utility gradient-text {
+  background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ─── Orb animations ─── */
+@keyframes orb-float {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50%       { transform: translateY(-40px) scale(1.06); }
+}
+@keyframes orb-float-r {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50%       { transform: translateY(35px) scale(0.95); }
+}
+@keyframes arrow-bounce {
+  0%, 100% { transform: translateY(0); opacity: .6; }
+  50%       { transform: translateY(8px); opacity: .2; }
+}
+
+.orb-a  { animation: orb-float   18s ease-in-out infinite; }
+.orb-b  { animation: orb-float-r 22s ease-in-out infinite; }
+.arrow-bounce { animation: arrow-bounce 2s ease-in-out infinite; }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(124,58,237,.5); border-radius: 4px; }
+
+:focus-visible { outline: 2px solid #7c3aed; outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
