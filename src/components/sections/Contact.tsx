@@ -87,11 +87,14 @@ export default function Contact() {
         </motion.div>
 
         {/* Layout: info + form */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.6fr)',
-          gap: 20,
-        }}>
+        <div
+          className="contact-layout"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.6fr)',
+            gap: 20,
+          }}
+        >
 
           {/* Panel de info */}
           <motion.div
@@ -161,7 +164,10 @@ export default function Contact() {
               <form ref={formRef} onSubmit={handleSubmit} noValidate
                 style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+                <div
+                  className="contact-form-grid"
+                  style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}
+                >
                   <Field label={f.name as string} req>
                     <input name="name" type="text" required placeholder={f.name_placeholder as string} style={INPUT} {...focus} />
                   </Field>
@@ -170,7 +176,10 @@ export default function Contact() {
                   </Field>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+                <div
+                  className="contact-form-grid"
+                  style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}
+                >
                   <Field label={f.company as string}>
                     <input name="company" type="text" placeholder={f.company_placeholder as string} style={INPUT} {...focus} />
                   </Field>
@@ -219,14 +228,19 @@ export default function Contact() {
           </motion.div>
         </div>
 
-        {/* Responsivo: en móvil apilar columnas */}
         <style>{`
-          @media (max-width: 767px) {
-            #contacto [style*="grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr)"] {
+          @media (max-width: 900px) {
+            #contacto .contact-layout {
               grid-template-columns: 1fr !important;
             }
-            #contacto form [style*="grid-template-columns: 1fr 1fr"] {
+          }
+
+          @media (max-width: 640px) {
+            #contacto .contact-form-grid {
               grid-template-columns: 1fr !important;
+            }
+            #contacto .section-card {
+              padding: 24px 18px !important;
             }
           }
         `}</style>
