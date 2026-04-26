@@ -1,72 +1,106 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 @import "tailwindcss";
+
+/*
+  IMPORTANTE: Todo CSS personalizado que va DESPUÉS de @import "tailwindcss"
+  sin estar en un @layer tiene prioridad sobre @layer utilities de Tailwind.
+  Por eso los resets y estilos base DEBEN ir dentro de @layer base,
+  y solo los helpers sin conflicto van fuera de capas.
+*/
 
 /* ─── Tokens ─── */
 :root {
-  --bg:      #080812;
-  --surface: #0e0e1c;
-  --card:    #12121f;
-  --border:  #1e1e32;
-  --violet:  #7c3aed;
-  --cyan:    #06b6d4;
-  --white:   #f1f5f9;
-  --muted:   #64748b;
-  --grad:    linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+  --violet: #7c3aed;
+  --blue:   #0ea5e9;
+  --grad:   linear-gradient(135deg, #7c3aed 0%, #0ea5e9 100%);
 }
 
-/* ─── Reset ─── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+/* ─── Base — DEBE ir en @layer base para no ganarle a utilities ─── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
 
-body {
-  background-color: var(--bg);
-  color: var(--white);
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+
+  body {
+    background: #ffffff;
+    color: #0f172a;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  #root { min-height: 100dvh; display: flex; flex-direction: column; }
+
+  button, input, select, textarea { font: inherit; }
+  a, button { -webkit-tap-highlight-color: transparent; }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    color: #0f172a;
+  }
 }
 
-#root { min-height: 100dvh; display: flex; flex-direction: column; }
-
-h1, h2, h3, h4, h5 {
-  font-family: 'Space Grotesk', system-ui, sans-serif;
-  line-height: 1.1;
-  letter-spacing: -0.025em;
-  color: var(--white);
-}
-
-/* ─── Gradient text ─── */
+/* ─── Tailwind v4 custom utility ─── */
 @utility gradient-text {
-  background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+  background: linear-gradient(135deg, #7c3aed 0%, #0ea5e9 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* ─── Orb animations ─── */
-@keyframes orb-float {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50%       { transform: translateY(-40px) scale(1.06); }
-}
-@keyframes orb-float-r {
-  0%, 100% { transform: translateY(0px) scale(1); }
-  50%       { transform: translateY(35px) scale(0.95); }
-}
-@keyframes arrow-bounce {
-  0%, 100% { transform: translateY(0); opacity: .6; }
-  50%       { transform: translateY(8px); opacity: .2; }
+/* ─── Componentes estáticos — sin conflicto con spacing de Tailwind ─── */
+.section-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.05), 0 4px 16px rgba(0,0,0,.04);
 }
 
-.orb-a  { animation: orb-float   18s ease-in-out infinite; }
-.orb-b  { animation: orb-float-r 22s ease-in-out infinite; }
-.arrow-bounce { animation: arrow-bounce 2s ease-in-out infinite; }
+.eyebrow {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: rgba(124,58,237,.07);
+  color: #7c3aed;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 1px solid rgba(124,58,237,.15);
+}
+
+.section-title {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #0f172a;
+}
+
+.section-copy {
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* ─── Animaciones ─── */
+@keyframes orb-float   { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-30px) scale(1.04); } }
+@keyframes orb-float-r { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(25px) scale(.96); } }
+@keyframes arrow-bounce { 0%,100% { transform: translateY(0); opacity: .5; } 50% { transform: translateY(7px); opacity: .15; } }
+
+.orb-a        { animation: orb-float    16s ease-in-out infinite; }
+.orb-b        { animation: orb-float-r  20s ease-in-out infinite; }
+.arrow-bounce { animation: arrow-bounce  2s ease-in-out infinite; }
 
 /* ─── Scrollbar ─── */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: rgba(124,58,237,.5); border-radius: 4px; }
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: rgba(124,58,237,.35); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #7c3aed; }
 
 :focus-visible { outline: 2px solid #7c3aed; outline-offset: 3px; }
 

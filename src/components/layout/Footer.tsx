@@ -8,34 +8,42 @@ const XX = () => <svg width={15} height={15} viewBox="0 0 24 24" fill="currentCo
 export default function Footer() {
   const { t } = useTranslation()
   const year = new Date().getFullYear()
-  const scroll = (e: React.MouseEvent, href: string) => { e.preventDefault(); document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' }) }
+  const scroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault()
+    document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   const nav = [
     { label: t('footer.services'), href: '#servicios' },
-    { label: t('footer.about'),    href: '#nosotros' },
-    { label: t('footer.contact'),  href: '#contacto' },
+    { label: t('footer.about'),    href: '#nosotros'  },
+    { label: t('footer.contact'),  href: '#contacto'  },
   ]
   const social = [
-    { Icon: GH, href: 'https://github.com/vltech',           label: 'GitHub' },
+    { Icon: GH, href: 'https://github.com/vltech',           label: 'GitHub'   },
     { Icon: LI, href: 'https://linkedin.com/company/vltech', label: 'LinkedIn' },
-    { Icon: XX, href: 'https://twitter.com/vltech_mx',       label: 'X' },
+    { Icon: XX, href: 'https://twitter.com/vltech_mx',       label: 'X'        },
   ]
 
-  return (
-    <footer className="border-t py-12 sm:py-16 px-4 sm:px-6 lg:px-8"
-      style={{ borderColor: 'rgba(255,255,255,0.07)', background: 'rgba(255,255,255,0.01)' }}>
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-10">
+  const linkStyle: React.CSSProperties = { fontSize: 14, color: '#94a3b8', textDecoration: 'none', transition: 'color .15s' }
 
-          {/* Brand — spans 2 cols on md */}
-          <div className="col-span-2 flex flex-col gap-4">
-            <Logo height={32} />
-            <p className="text-sm text-(--color-muted) leading-relaxed max-w-xs">{t('footer.tagline')}</p>
-            <div className="flex gap-2 mt-1">
+  return (
+    <footer style={{ background: '#0f172a', borderTop: '1px solid #1e293b' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-10">
+
+          {/* Brand */}
+          <div className="sm:col-span-2" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <Logo height={30} dark />
+            <p style={{ fontSize: 14, color: '#64748b', lineHeight: 1.7, maxWidth: 280 }}>
+              {t('footer.tagline')}
+            </p>
+            <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
               {social.map(({ Icon, href, label }) => (
                 <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
-                  className="w-9 h-9 flex items-center justify-center rounded-xl text-(--color-muted) hover:text-white transition-colors"
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  style={{ width: 36, height: 36, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', transition: 'color .15s, background .15s' }}
+                  onMouseEnter={e => { e.currentTarget.style.color = '#f1f5f9'; e.currentTarget.style.background = 'rgba(255,255,255,0.1)' }}
+                  onMouseLeave={e => { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.background = 'rgba(255,255,255,0.05)' }}
+                >
                   <Icon />
                 </a>
               ))}
@@ -44,14 +52,17 @@ export default function Footer() {
 
           {/* Nav */}
           <div>
-            <p className="text-xs font-semibold tracking-[.18em] uppercase text-(--color-muted) mb-4">
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.15em', textTransform: 'uppercase', color: '#475569', marginBottom: 16 }}>
               {t('footer.links_title')}
             </p>
-            <ul className="flex flex-col gap-2.5">
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: 10, listStyle: 'none' }}>
               {nav.map(l => (
                 <li key={l.href}>
-                  <a href={l.href} onClick={e => scroll(e, l.href)}
-                    className="text-sm text-(--color-muted) hover:text-white transition-colors">{l.label}</a>
+                  <a href={l.href} onClick={e => scroll(e, l.href)} style={linkStyle}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#f1f5f9')}
+                    onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')}>
+                    {l.label}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -59,20 +70,27 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <p className="text-xs font-semibold tracking-[.18em] uppercase text-(--color-muted) mb-4">
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.15em', textTransform: 'uppercase', color: '#475569', marginBottom: 16 }}>
               {t('footer.legal')}
             </p>
-            <ul className="flex flex-col gap-2.5">
-              <li><a href="#" className="text-sm text-(--color-muted) hover:text-white transition-colors">{t('footer.privacy')}</a></li>
-              <li><a href="#" className="text-sm text-(--color-muted) hover:text-white transition-colors">{t('footer.terms')}</a></li>
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: 10, listStyle: 'none' }}>
+              {[t('footer.privacy'), t('footer.terms')].map(label => (
+                <li key={label}>
+                  <a href="#" style={linkStyle}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#f1f5f9')}
+                    onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')}>
+                    {label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3"
-          style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
-          <p className="text-xs text-(--color-muted)">{t('footer.rights', { year })}</p>
-          <p className="text-xs text-(--color-muted) flex items-center gap-1.5">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3"
+          style={{ borderTop: '1px solid #1e293b', paddingTop: 24 }}>
+          <p style={{ fontSize: 13, color: '#475569' }}>{t('footer.rights', { year })}</p>
+          <p style={{ fontSize: 13, color: '#475569', display: 'flex', alignItems: 'center', gap: 6 }}>
             {t('footer.made')} <span role="img" aria-label="México">🇲🇽</span>
           </p>
         </div>

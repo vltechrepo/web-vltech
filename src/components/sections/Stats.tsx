@@ -17,20 +17,41 @@ function useCount(target: number, duration: number, active: boolean) {
   return v
 }
 
-function Stat({ value, suffix, label, delay, active }: { value: number; suffix: string; label: string; delay: number; active: boolean }) {
-  const n = useCount(value, 1600, active)
+function Stat({ value, suffix, label, delay, active }: {
+  value: number; suffix: string; label: string; delay: number; active: boolean
+}) {
+  const n = useCount(value, 1400, active)
   return (
-    <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .5, delay }}
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: .4, delay }}
+      className="section-card"
       style={{
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
-        textAlign: 'center', padding: '28px 16px',
-        backgroundColor: '#12121f', border: '1px solid #1e1e32', borderRadius: 16,
-      }}>
-      <span aria-label={`${value}${suffix}`}
-        style={{ fontFamily: "'Space Grotesk',sans-serif", fontSize: 44, fontWeight: 700, lineHeight: 1, background: 'linear-gradient(135deg,#7c3aed,#06b6d4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+        padding: '32px 24px',
+        textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 10,
+      }}
+    >
+      <div
+        aria-label={`${value}${suffix}`}
+        style={{
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontSize: 'clamp(2rem, 5vw, 2.75rem)',
+          fontWeight: 700,
+          lineHeight: 1,
+          background: 'linear-gradient(135deg, #7c3aed, #0ea5e9)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+        }}
+      >
         {n}{suffix}
-      </span>
-      <span style={{ fontSize: 13, fontWeight: 500, color: '#64748b', lineHeight: 1.3 }}>{label}</span>
+      </div>
+      <div style={{ fontSize: 14, fontWeight: 500, color: '#64748b' }}>{label}</div>
     </motion.div>
   )
 }
@@ -43,30 +64,46 @@ export default function Stats() {
 
   useEffect(() => {
     const el = ref.current; if (!el) return
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setActive(true) }, { threshold: .2 })
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setActive(true) }, { threshold: .25 })
     obs.observe(el); return () => obs.disconnect()
   }, [])
 
   return (
-    <section id="nosotros" ref={ref} className="py-20 sm:py-28"
-      style={{ backgroundColor: '#080812', borderTop: '1px solid #1e1e32', borderBottom: '1px solid #1e1e32', position: 'relative', overflow: 'hidden' }}>
+    <section
+      id="nosotros"
+      ref={ref}
+      style={{ background: '#ffffff', borderTop: '1px solid #e2e8f0' }}
+    >
+      <div style={{ maxWidth: 960, margin: '0 auto', padding: '80px 24px' }}>
 
-      {/* Subtle gradient accent */}
-      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse 70% 50% at 50% 50%, rgba(124,58,237,.06) 0%, transparent 70%)', pointerEvents: 'none' }} aria-hidden />
-
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8" style={{ position: 'relative', zIndex: 1 }}>
-        <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .55 }}
-          style={{ textAlign: 'center', marginBottom: 52 }}>
-          <h2 className="text-3xl sm:text-4xl md:text-[2.75rem]"
-            style={{ fontFamily: "'Space Grotesk',sans-serif", fontWeight: 700, color: '#f1f5f9' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: .45 }}
+          style={{ textAlign: 'center', marginBottom: 48 }}
+        >
+          <h2 className="section-title" style={{ marginBottom: 10 }}>
             {t('stats.title')}{' '}
             <span className="gradient-text">{t('stats.title_accent')}</span>
           </h2>
+          <p className="section-copy">{t('contact.subtitle')}</p>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gap: 16,
+        }}>
           {items.map((item, i) => (
-            <Stat key={i} value={item.value} suffix={item.suffix} label={item.label} delay={i * .08} active={active} />
+            <Stat
+              key={i}
+              value={item.value}
+              suffix={item.suffix}
+              label={item.label}
+              delay={i * .07}
+              active={active}
+            />
           ))}
         </div>
       </div>

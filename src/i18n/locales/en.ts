@@ -73,7 +73,7 @@ const en = {
       'Tell us about your project and we\'ll get back to you within 24 hours.',
     info: {
       email_label: 'Email',
-      email: 'hello@vltech.mx',
+      email: 'support@vltech.mx',
       location_label: 'Location',
       location: 'Mexico',
     },

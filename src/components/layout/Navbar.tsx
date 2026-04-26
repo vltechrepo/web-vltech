@@ -23,7 +23,7 @@ export default function Navbar() {
   const isEN = i18n.language.startsWith('en')
   const goto = (id: string) => {
     setOpen(false)
-    setTimeout(() => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' }), 100)
+    setTimeout(() => document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' }), 80)
   }
 
   const links = [
@@ -32,74 +32,58 @@ export default function Navbar() {
     { label: t('nav.contact'),  id: '#contacto'  },
   ]
 
-  const navBg = scrolled
-    ? 'rgba(8,8,18,0.9)'
-    : 'transparent'
-  const navBorder = scrolled
-    ? '1px solid rgba(255,255,255,0.07)'
-    : '1px solid transparent'
-
   return (
     <>
       <header style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-        backgroundColor: navBg, backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        borderBottom: navBorder, transition: 'all 0.3s ease',
+        background: scrolled ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0)',
+        backdropFilter: scrolled ? 'blur(16px)' : 'none',
+        borderBottom: scrolled ? '1px solid #e2e8f0' : '1px solid transparent',
+        boxShadow: scrolled ? '0 1px 12px rgba(0,0,0,.06)' : 'none',
+        transition: 'all 0.25s ease',
       }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between" style={{ height: 68 }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4" style={{ minHeight: 68 }}>
 
-          <a href="#" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
+          <a href="#" className="shrink-0" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>
             <Logo height={30} />
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-7">
             {links.map(l => (
-              <a key={l.id} href={l.id}
-                onClick={e => { e.preventDefault(); goto(l.id) }}
-                style={{ color: '#94a3b8', fontSize: 14, fontWeight: 500, textDecoration: 'none', transition: 'color .2s' }}
-                onMouseEnter={e => (e.currentTarget.style.color = '#f1f5f9')}
-                onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')}
+              <a key={l.id} href={l.id} onClick={e => { e.preventDefault(); goto(l.id) }}
+                style={{ color: '#64748b', fontSize: 14, fontWeight: 500, textDecoration: 'none', transition: 'color .18s' }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#0f172a')}
+                onMouseLeave={e => (e.currentTarget.style.color = '#64748b')}
               >
                 {l.label}
               </a>
             ))}
           </nav>
 
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center">
             <button onClick={() => i18n.changeLanguage(isEN ? 'es' : 'en')}
               style={{
-                fontSize: 11, fontWeight: 700, letterSpacing: '0.1em',
+                fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', cursor: 'pointer',
                 color: '#64748b', padding: '6px 12px', borderRadius: 8,
-                background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
-                cursor: 'pointer', transition: 'all .2s',
+                background: '#f1f5f9', border: '1px solid #e2e8f0', transition: 'all .18s',
               }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#f1f5f9')}
-              onMouseLeave={e => (e.currentTarget.style.color = '#64748b')}
+              onMouseEnter={e => { e.currentTarget.style.color = '#0f172a'; e.currentTarget.style.borderColor = '#cbd5e1' }}
+              onMouseLeave={e => { e.currentTarget.style.color = '#64748b'; e.currentTarget.style.borderColor = '#e2e8f0' }}
             >
               {isEN ? 'EN' : 'ES'}
             </button>
-            <a href="#contacto" onClick={e => { e.preventDefault(); goto('#contacto') }}
-              style={{
-                fontSize: 13, fontWeight: 600, color: '#fff',
-                padding: '9px 20px', borderRadius: 10,
-                background: 'linear-gradient(135deg, #7c3aed, #06b6d4)',
-                textDecoration: 'none', transition: 'opacity .2s, box-shadow .2s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.opacity = '.88'; e.currentTarget.style.boxShadow = '0 0 24px rgba(124,58,237,.5)' }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.boxShadow = 'none' }}
-            >
-              {t('nav.cta')}
-            </a>
           </div>
 
           {/* Mobile */}
-          <div className="flex md:hidden items-center gap-2">
+          <div className="flex md:hidden items-center gap-2 shrink-0">
             <button onClick={() => i18n.changeLanguage(isEN ? 'es' : 'en')}
-              style={{ fontSize: 11, fontWeight: 700, color: '#64748b', padding: '5px 10px', borderRadius: 7, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', cursor: 'pointer' }}>
+              style={{ fontSize: 11, fontWeight: 700, color: '#64748b', padding: '5px 10px', borderRadius: 7, background: '#f1f5f9', border: '1px solid #e2e8f0', cursor: 'pointer' }}>
               {isEN ? 'EN' : 'ES'}
             </button>
-            <button onClick={() => setOpen(!open)} style={{ color: '#f1f5f9', padding: 4, background: 'none', border: 'none', cursor: 'pointer' }}>
+            <button onClick={() => setOpen(!open)}
+              style={{ color: '#0f172a', padding: 6, background: 'none', border: 'none', cursor: 'pointer' }}
+              aria-label={open ? 'Cerrar menú' : 'Abrir menú'}>
               {open ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
@@ -110,16 +94,16 @@ export default function Navbar() {
         {open && (
           <>
             <motion.div key="ov" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              style={{ position: 'fixed', inset: 0, zIndex: 40, background: 'rgba(0,0,0,.75)', backdropFilter: 'blur(4px)' }}
+              style={{ position: 'fixed', inset: 0, zIndex: 40, background: 'rgba(15,23,42,.4)', backdropFilter: 'blur(4px)' }}
               className="md:hidden" onClick={() => setOpen(false)} />
-
             <motion.nav key="dr"
               initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 28, stiffness: 280 }}
               style={{
-                position: 'fixed', top: 0, right: 0, bottom: 0, zIndex: 50, width: 280,
-                background: '#0e0e1c', borderLeft: '1px solid rgba(255,255,255,0.08)',
-                display: 'flex', flexDirection: 'column', paddingTop: 80, paddingBottom: 32, paddingLeft: 24, paddingRight: 24,
+                position: 'fixed', top: 0, right: 0, bottom: 0, zIndex: 50,
+                width: 'min(88vw, 320px)', background: '#fff',
+                borderLeft: '1px solid #e2e8f0', boxShadow: '-8px 0 32px rgba(0,0,0,.1)',
+                display: 'flex', flexDirection: 'column', paddingTop: 80, paddingBottom: 28, paddingLeft: 20, paddingRight: 20,
               }}
               className="md:hidden"
             >
@@ -128,35 +112,23 @@ export default function Navbar() {
                 <X size={20} />
               </button>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {links.map((l, i) => (
                   <motion.a key={l.id} href={l.id}
                     onClick={e => { e.preventDefault(); goto(l.id) }}
                     initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.06 }}
+                    transition={{ delay: i * .06 }}
                     style={{
-                      color: '#94a3b8', fontSize: 15, fontWeight: 500, textDecoration: 'none',
-                      padding: '14px 0', borderBottom: '1px solid rgba(255,255,255,0.06)',
-                      transition: 'color .2s',
+                      color: '#475569', fontSize: 15, fontWeight: 500, textDecoration: 'none',
+                      padding: '14px 0', borderBottom: '1px solid #f1f5f9', transition: 'color .15s',
                     }}
-                    onMouseEnter={e => (e.currentTarget.style.color = '#f1f5f9')}
-                    onMouseLeave={e => (e.currentTarget.style.color = '#94a3b8')}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#0f172a')}
+                    onMouseLeave={e => (e.currentTarget.style.color = '#475569')}
                   >
                     {l.label}
                   </motion.a>
                 ))}
               </div>
-
-              <motion.a href="#contacto" onClick={e => { e.preventDefault(); goto('#contacto') }}
-                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: .22 }}
-                style={{
-                  marginTop: 28, textAlign: 'center', fontSize: 13, fontWeight: 600,
-                  color: '#fff', padding: '12px 20px', borderRadius: 10, textDecoration: 'none',
-                  background: 'linear-gradient(135deg, #7c3aed, #06b6d4)',
-                }}
-              >
-                {t('nav.cta')}
-              </motion.a>
             </motion.nav>
           </>
         )}

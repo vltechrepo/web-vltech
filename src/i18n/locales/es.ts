@@ -8,7 +8,7 @@ const es = {
   hero: {
     badge: 'Innovación Tecnológica',
     headline1: 'Tecnología que',
-    headline2: 'transforma negocios',
+    headline2: 'transforma tu negocio',
     subtext:
       'Construimos soluciones digitales a la medida de tu visión. Desde apps móviles hasta automatización de procesos — hacemos realidad lo que tu negocio necesita.',
     cta_primary: 'Ver Servicios',
@@ -73,7 +73,7 @@ const es = {
       'Cuéntanos sobre tu proyecto y te responderemos en menos de 24 horas.',
     info: {
       email_label: 'Email',
-      email: 'hola@vltech.mx',
+      email: 'support@vltech.mx',
       location_label: 'Ubicación',
       location: 'México',
     },
