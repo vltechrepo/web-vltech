@@ -35,7 +35,6 @@ export default function Services() {
           transition={{ duration: .45 }}
           style={{ textAlign: 'center', marginBottom: 48 }}
         >
-          <span className="eyebrow">{t('services.badge')}</span>
           <h2 className="section-title" style={{ marginTop: 8, marginBottom: 12 }}>
             {t('services.title')}{' '}
             <span className="gradient-text">{t('services.title_accent')}</span>

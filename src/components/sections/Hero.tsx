@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { motion } from 'motion/react'
-import { ArrowRight, ChevronDown, Sparkles } from 'lucide-react'
+import { ArrowRight, ChevronDown } from 'lucide-react'
 import InfiniteGrid from '@/components/ui/InfiniteGrid'
 
 const PILLS = ['React', 'Flutter', 'Node.js', 'Python', 'AWS', 'TypeScript']
@@ -61,20 +61,6 @@ export default function Hero() {
           gap: 20, paddingTop: 96, paddingBottom: 72,
         }}
       >
-        {/* Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .4 }}
-          style={{
-            display: 'inline-flex', alignItems: 'center', gap: 6,
-            background: 'rgba(124,58,237,.07)', border: '1px solid rgba(124,58,237,.18)',
-            borderRadius: 999, padding: '5px 14px',
-            fontSize: 11, fontWeight: 700, color: '#7c3aed', letterSpacing: '.1em', textTransform: 'uppercase',
-          }}
-        >
-          <Sparkles size={11} aria-hidden />
-          {t('hero.badge')}
-        </motion.div>
-
         {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .55, delay: .1 }}

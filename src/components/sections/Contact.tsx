@@ -77,7 +77,6 @@ export default function Contact() {
           transition={{ duration: .45 }}
           style={{ textAlign: 'center', marginBottom: 48 }}
         >
-          <span className="eyebrow">{t('contact.badge')}</span>
           <h2 className="section-title" style={{ marginTop: 8, marginBottom: 12 }}>
             {t('contact.title')}{' '}
             <span className="gradient-text">{t('contact.title_accent')}</span>
