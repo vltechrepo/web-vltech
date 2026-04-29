@@ -52,10 +52,18 @@ export default function Contact() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); setStatus('loading')
+    const data = new FormData(e.currentTarget)
     try {
-      const res = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-        method: 'POST', body: new FormData(e.currentTarget),
-        headers: { Accept: 'application/json' },
+      const res = await fetch('https://formsubmit.co/ajax/contacto@vltech.mx', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name:    data.get('name'),
+          email:   data.get('email'),
+          company: data.get('company'),
+          service: data.get('service'),
+          message: data.get('message'),
+        }),
       })
       if (res.ok) { setStatus('success'); formRef.current?.reset() }
       else setStatus('error')

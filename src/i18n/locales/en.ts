@@ -8,7 +8,7 @@ const en = {
   hero: {
     badge: "Technology Innovation",
     headline1: "Technology that",
-    headline2: "transforms businesses",
+    headline2: "transforms your business",
     subtext:
       "We build digital solutions tailored to your vision. From mobile apps to process automation — we make what your business needs a reality.",
     cta_primary: "Our Services",
